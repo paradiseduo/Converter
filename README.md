@@ -3,8 +3,8 @@
 ## Convert IPA to Mac App (M1 SIP disabled)
 requirements:
 - decrypted app with [appdecrypt](https://github.com/paradiseduo/appdecrypt) or other tools
-- An Apple Developer Account
-- https://github.com/AloneMonkey/MonkeyDev
+- An Apple Developer Account with "teamID.com.*" mobileprovision
+- https://github.com/AloneMonkey/MonkeyDev or https://github.com/DanTheMan827/ios-app-signer
 
 ## How to use
 ```bash
