@@ -1,6 +1,6 @@
 # Converter
 
-## Convert IPA to Mac App (M1 SIP disabled)
+## Convert IPA to Mac App (M1 SIP enabled)
 requirements:
 - decrypted app with [appdecrypt](https://github.com/paradiseduo/appdecrypt) or other tools
 - An Apple Developer Account with "teamID.com.*" mobileprovision
