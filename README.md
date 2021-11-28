@@ -36,3 +36,6 @@ You must use a Decrypted IPA with developer codesign
 Start converter /Users/minim1/Desktop/KingsRaid.ipa
 Finish converter, you can found it in Launchpad(启动台)
 ```
+
+## Thanks
+https://github.com/Mila432/IPA-to-App-M1
