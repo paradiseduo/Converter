@@ -28,64 +28,56 @@ public struct Converter {
         }
         
         let targetUrl = "."
-        let zipfile = targetUrl + "/converter.zip"
         let temFile = targetUrl + "/tmp"
         consoleIO.writeMessage("Start converter \(sourceUrl)")
-        self.run("cp -rf \(sourceUrl) \(zipfile)") { t1, o1 in
-            if t1 == 0 {
-                self.run("unzip -o \(zipfile) -d \(temFile)") { t2, o2 in
-                    if t2 == 0 {
-                        let payload = temFile+"/Payload"
-                        let wrapper = temFile+"/Wrapper"
-                        do {
-                            try FileManager.default.removeItem(atPath: zipfile)
-                            let fileList = try FileManager.default.contentsOfDirectory(atPath: payload)
-                            var appPath = payload
-                            var machOPath = payload
-                            var appFileName = ""
-                            for item in fileList {
-                                if item.hasSuffix(".app") {
-                                    appFileName = item
-                                    appPath += "/\(appFileName)"
-                                    machOPath = appPath+"/\(appFileName.components(separatedBy: ".")[0])"
-                                    break
-                                }
-                            }
-                            self.run("chmod 0777 \(machOPath)") { t3, o3 in
-                                if t3 == 0 {
-                                    self.run("mv \(payload) \(wrapper)") { t4, o4 in
-                                        if t4 == 0 {
-                                            self.run("cd \(temFile) && ln -s Wrapper/\(appFileName) WrappedBundle") { t5, o5 in
-                                                if t5 == 0 {
-                                                    self.run("mv \(temFile) /Applications/\(appFileName)") { t6, o6 in
-                                                        if t6 == 0 {
-                                                            consoleIO.writeMessage("Finish converter, you can found it in Launchpad(启动台)")
-                                                            exit(0)
-                                                        } else {
-                                                            consoleIO.writeMessage("\(t6) \(o6)", to: .error)
-                                                        }
-                                                    }
+        self.run("unzip -o \(sourceUrl) -d \(temFile)") { t2, o2 in
+            if t2 == 0 {
+                let payload = temFile+"/Payload"
+                let wrapper = temFile+"/Wrapper"
+                do {
+                    let fileList = try FileManager.default.contentsOfDirectory(atPath: payload)
+                    var appPath = payload
+                    var machOPath = payload
+                    var appFileName = ""
+                    for item in fileList {
+                        if item.hasSuffix(".app") {
+                            appFileName = item
+                            appPath += "/\(appFileName)"
+                            machOPath = appPath+"/\(appFileName.components(separatedBy: ".")[0])"
+                            break
+                        }
+                    }
+                    self.run("chmod 0777 \(machOPath)") { t3, o3 in
+                        if t3 == 0 {
+                            self.run("mv \(payload) \(wrapper)") { t4, o4 in
+                                if t4 == 0 {
+                                    self.run("cd \(temFile) && ln -s Wrapper/\(appFileName) WrappedBundle") { t5, o5 in
+                                        if t5 == 0 {
+                                            self.run("mv \(temFile) /Applications/\(appFileName)") { t6, o6 in
+                                                if t6 == 0 {
+                                                    consoleIO.writeMessage("Finish converter, you can found it in Launchpad(启动台)")
+                                                    exit(0)
                                                 } else {
-                                                    consoleIO.writeMessage("\(t5) \(o5)", to: .error)
+                                                    consoleIO.writeMessage("\(t6) \(o6)", to: .error)
                                                 }
                                             }
                                         } else {
-                                            consoleIO.writeMessage("\(t4) \(o4)", to: .error)
+                                            consoleIO.writeMessage("\(t5) \(o5)", to: .error)
                                         }
                                     }
                                 } else {
-                                    consoleIO.writeMessage("\(t3) \(o3)", to: .error)
+                                    consoleIO.writeMessage("\(t4) \(o4)", to: .error)
                                 }
                             }
-                        } catch let e {
-                            consoleIO.writeMessage("list file error \(e)", to: .error)
+                        } else {
+                            consoleIO.writeMessage("\(t3) \(o3)", to: .error)
                         }
-                    } else {
-                        consoleIO.writeMessage("\(t2) \(o2)", to: .error)
                     }
+                } catch let e {
+                    consoleIO.writeMessage("list file error \(e)", to: .error)
                 }
             } else {
-                consoleIO.writeMessage("\(t1) \(o1)", to: .error)
+                consoleIO.writeMessage("\(t2) \(o2)", to: .error)
             }
         }
     }
