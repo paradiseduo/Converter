@@ -10,6 +10,7 @@ requirements:
 ```bash
 > git clone https://github.com/paradiseduo/Converter.git
 > chmod +x build-macOS_arm.sh.sh
+> cd Converter
 > ./build-macOS_arm.sh
 > ./converter
 Version 1.0
