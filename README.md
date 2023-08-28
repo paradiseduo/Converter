@@ -9,8 +9,8 @@ requirements:
 ## How to use
 ```bash
 > git clone https://github.com/paradiseduo/Converter.git
-> chmod +x build-macOS_arm.sh.sh
 > cd Converter
+> chmod +x build-macOS_arm.sh
 > ./build-macOS_arm.sh
 > ./converter
 Version 1.0
